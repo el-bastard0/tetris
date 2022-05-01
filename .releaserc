@@ -1,0 +1,54 @@
+{
+    "branches": ["main"],
+    "plugins": [
+        "@semantic-release/commit-analyzer",
+        [
+            "semantic-release-dotnet",
+            {
+                "paths": ["src/app/**.csproj"]
+            }
+        ],
+        "@semantic-release/release-notes-generator",
+        [
+            "@semantic-release/changelog",
+            {
+                "changelogFile": "CHANGELOG.md",
+                "changelogTitle": "# Semantic Versioning Changelog"
+            }
+        ],
+        [
+            "@semantic-release/exec", {
+                "prepareCmd": "chmod u+x ./publish.sh",
+                "publishCmd": "./publish.sh"
+          }
+        ],        
+        [
+            "@semantic-release/git",
+            {
+              "assets": ["CHANGELOG.md", "src/app/**.csproj"]
+            }
+        ],
+        [
+            "@semantic-release/github",
+            {
+                "assets": [
+                    {   
+                        "label": "win-x64",
+                        "name": "GameOfLife.win-x64.exe",
+                        "path": "/home/runner/work/tetris/tetris/src/app/bin/Release/net6.0/win-x64/publish/*.exe"
+                    },
+                    {   
+                        "label": "linux-x64",
+                        "name": "GameOfLife.linux-x64.dll",
+                        "path": "/home/runner/work/tetris/tetris/src/app/bin/Release/net6.0/linux-x64/publish/ElBastard0.Tetris"
+                    },
+                    {   
+                        "label": "linux-arm64",
+                        "name": "GameOfLife.linux-arm64.dll",
+                        "path": "/home/runner/work/tetris/tetris/src/app/bin/Release/net6.0/linux-arm64/publish/ElBastard0.Tetris"
+                    }
+                ]
+            }
+        ]
+    ]
+}
